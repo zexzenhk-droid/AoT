@@ -1,0 +1,1 @@
+Forcar arranque do GitHub Actions
