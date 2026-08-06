@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>Teste v2.0 - AOT Engenheiro</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; background: #0a100e; color: #dfeae6; }
+.patentes-wrapper, .missoes-wrapper, .mapas-wrapper, .armamento-recomendado {
+  margin: 1rem 0; padding: 1rem; border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px; background: rgba(0,0,0,0.2);
+}
+select { width: 100%; padding: 0.5rem; margin-top: 0.5rem; background: #1a1a1a;
+  color: #fff; border: 1px solid #666; border-radius: 4px; }
+label { display: block; margin-top: 1rem; font-weight: bold; }
+.callsign-display { margin-top: 1.5rem; padding: 1rem; background: rgba(76,175,80,0.2);
+  border-left: 4px solid #4CAF50; border-radius: 4px; font-size: 1.1rem; }
+.missao-briefing { margin-top: 1.5rem; padding: 1rem; background: rgba(33,150,243,0.2);
+  border-left: 4px solid #2196F3; border-radius: 4px; }
+.mapa-info { margin-top: 1.5rem; padding: 1rem; background: rgba(255,152,0,0.2);
+  border-left: 4px solid #FF9800; border-radius: 4px; }
+h1 { color: #39d98a; }
+h2 { color: #7dd3fc; margin-top: 2rem; }
+.status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+.ok { background: rgba(76,175,80,0.3); border-left: 4px solid #4CAF50; }
+.erro { background: rgba(244,67,54,0.3); border-left: 4px solid #F44336; }
+</style>
+</head>
+<body>
+
+<h1>🧪 Teste v2.0 - Sistema de Patentes, Missões e Mapas</h1>
+
+<div id="resultados"></div>
+
+<h2>1. Teste de Patentes</h2>
+<div id="seletorPatentes"></div>
+
+<h2>2. Teste de Missões</h2>
+<div id="seletorMissoes"></div>
+
+<h2>3. Teste de Mapas</h2>
+<div id="seletorMapas"></div>
+
+<h2>4. Teste de Armamento</h2>
+<div id="recomendacaoArmamento"></div>
+
+<script>
+// Simular funções básicas
+const $ = (s) => document.querySelector(s);
+const store = {
+  data: {},
+  get(k, d) { return this.data[k] !== undefined ? this.data[k] : d; },
+  set(k, v) { this.data[k] = v; console.log('Store:', k, '=', v); }
+};
+
+const S = {
+  patente: 'second-lieutenant',
+  nacao_militar: 'USAAF',
+  callSign: '',
+  missaoId: 'hunt-trains',
+  tipoMissaoV2: 'single-mission',
+  mapaId: 'smolensk-1943',
+  clima: 'clear',
+  armamento: {}
+};
+
+// Testar carregamento dos scripts
+let resultados = '';
+
+function testar(nome, condicao) {
+  if (condicao) {
+    resultados += `<div class="status ok">✅ ${nome}</div>`;
+  } else {
+    resultados += `<div class="status erro">❌ ${nome}</div>`;
+  }
+  $('#resultados').innerHTML = resultados;
+}
+
+// Aguardar carregamento dos scripts
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    testar('patentes.js carregado', typeof getAllRanksByFaction !== 'undefined');
+    testar('mapas.js carregado', typeof mapasGameData !== 'undefined');
+    testar('missoes_v2.js carregado', typeof singleMissions !== 'undefined');
+    
+    if (typeof getAllRanksByFaction !== 'undefined') {
+      const ranks = getAllRanksByFaction('USAAF');
+      testar('Patentes USAAF disponíveis', Object.keys(ranks).length > 0);
+    }
+    
+    if (typeof mapasGameData !== 'undefined') {
+      testar('Mapas disponíveis', Object.keys(mapasGameData).length > 0);
+    }
+    
+    if (typeof singleMissions !== 'undefined') {
+      testar('Single Missions disponíveis', Object.keys(singleMissions).length > 0);
+    }
+    
+    // Testar funções de renderização (se existirem)
+    testar('Container seletorPatentes existe', $('#seletorPatentes') !== null);
+    testar('Container seletorMissoes existe', $('#seletorMissoes') !== null);
+    testar('Container seletorMapas existe', $('#seletorMapas') !== null);
+    testar('Container recomendacaoArmamento existe', $('#recomendacaoArmamento') !== null);
+    
+  }, 500);
+});
+</script>
+
+<!-- Carregar os módulos v2.0 -->
+<script src="js/patentes.js"></script>
+<script src="js/mapas.js"></script>
+<script src="js/missoes_v2.js"></script>
+
+</body>
+</html>

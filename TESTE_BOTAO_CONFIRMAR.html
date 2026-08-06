@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<title>TESTE: Botão Confirmar Aeronave</title>
+<style>
+body { font-family: monospace; padding: 20px; background: #0a100e; color: #fff; }
+.test { margin: 10px 0; padding: 10px; background: #1a2a1e; border-radius: 4px; }
+.ok { color: #0f0; } .erro { color: #f00; }
+button { padding: 10px 20px; font-size: 16px; margin: 10px; cursor: pointer; }
+</style>
+</head>
+<body>
+<h1>🔍 DIAGNÓSTICO: Botão "Confirmar Aeronave"</h1>
+
+<div class="test">
+  <h3>1. Verificação do Botão HTML</h3>
+  <p id="test1">⏳ A testar...</p>
+</div>
+
+<div class="test">
+  <h3>2. Verificação do Event Listener</h3>
+  <p id="test2">⏳ A testar...</p>
+</div>
+
+<div class="test">
+  <h3>3. Teste de Clique Manual</h3>
+  <button id="btConfirmar">Confirmar aeronave</button>
+  <p id="test3">⏳ Clica no botão acima...</p>
+</div>
+
+<div class="test">
+  <h3>4. Verificação de Erros JavaScript</h3>
+  <p id="test4">⏳ A verificar console...</p>
+</div>
+
+<div class="test">
+  <h3>5. Verificação de Ficheiros JS</h3>
+  <p id="test5">⏳ A carregar...</p>
+</div>
+
+<script>
+// Armazenamento simulado
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem('aot_'+k); return v===null?d:JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem('aot_'+k,JSON.stringify(v)); }catch(e){} }
+};
+
+const $ = (s)=>document.querySelector(s);
+
+// Estado simulado
+const S = {
+  aviaoId: store.get('aviao','p51'),
+  ecra: 'scHangar'
+};
+
+// Radio simulado
+const Radio = {
+  ajustarEra: (aviao)=>{
+    console.log('Radio.ajustarEra chamado com:', aviao);
+    return true;
+  }
+};
+
+// Função simulada
+function porId(id){
+  console.log('porId chamado com:', id);
+  return { id: id, era: 'wwii' };
+}
+
+function abrirMissao(){
+  console.log('✅ abrirMissao() foi chamada!');
+  $('#test3').innerHTML = '<span class="ok">✅ SUCESSO! O botão funcionou!</span>';
+}
+
+// TESTE 1: Botão existe?
+setTimeout(()=>{
+  const btn = $('#btConfirmar');
+  if(btn){
+    $('#test1').innerHTML = '<span class="ok">✅ Botão existe no DOM</span>';
+  } else {
+    $('#test1').innerHTML = '<span class="erro">❌ Botão NÃO encontrado!</span>';
+  }
+}, 100);
+
+// TESTE 2: Event listener funciona?
+setTimeout(()=>{
+  const btn = $('#btConfirmar');
+  if(btn){
+    // Adicionar o event listener igual ao app.js
+    btn.onclick = ()=>{
+      console.log('🔥 CLIQUE DETECTADO!');
+      store.set('aviao',S.aviaoId);
+      Radio.ajustarEra(porId(S.aviaoId));
+      abrirMissao();
+    };
+    $('#test2').innerHTML = '<span class="ok">✅ Event listener adicionado (onclick)</span>';
+  } else {
+    $('#test2').innerHTML = '<span class="erro">❌ Não foi possível adicionar listener</span>';
+  }
+}, 200);
+
+// TESTE 4: Erros?
+window.onerror = (msg, url, line, col, error)=>{
+  $('#test4').innerHTML = `<span class="erro">❌ ERRO: ${msg} (linha ${line})</span>`;
+};
+setTimeout(()=>{
+  if($('#test4').textContent.includes('⏳')){
+    $('#test4').innerHTML = '<span class="ok">✅ Sem erros JavaScript detectados</span>';
+  }
+}, 500);
+
+// TESTE 5: Ficheiros carregados?
+setTimeout(()=>{
+  const checks = [];
+  if(typeof store !== 'undefined') checks.push('✅ store');
+  if(typeof S !== 'undefined') checks.push('✅ S (estado)');
+  if(typeof Radio !== 'undefined') checks.push('✅ Radio');
+  if(typeof porId === 'function') checks.push('✅ porId()');
+  if(typeof abrirMissao === 'function') checks.push('✅ abrirMissao()');
+  
+  $('#test5').innerHTML = `<span class="ok">${checks.join('<br>')}</span>`;
+}, 300);
+</script>
+
+<hr>
+<h2>📋 INSTRUÇÕES PARA TESTAR NO APP REAL:</h2>
+<ol>
+  <li>Abrir DevTools (F12)</li>
+  <li>Ir para a aba "Console"</li>
+  <li>Clicar no botão "Confirmar aeronave"</li>
+  <li>Verificar se aparece mensagens de erro</li>
+  <li>Verificar se a variável <code>S.aviaoId</code> está definida</li>
+</ol>
+
+<h3>🔍 Causas Possíveis:</h3>
+<ul>
+  <li><strong>Cache do Browser</strong> - Fazer Ctrl+Shift+R</li>
+  <li><strong>S.aviaoId não está definido</strong> - Nenhum avião selecionado</li>
+  <li><strong>Erro em Radio.ajustarEra()</strong> - Verificar radio.js</li>
+  <li><strong>Erro em abrirMissao()</strong> - Verificar app.js linha 366</li>
+  <li><strong>JS não carregado</strong> - Verificar ordem dos scripts</li>
+</ul>
+
+</body>
+</html>

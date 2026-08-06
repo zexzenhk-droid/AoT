@@ -1,0 +1,153 @@
+=================================================================
+  DIAGNÓSTICO - PORQUE É QUE USA INTERNET ARCHIVE?
+=================================================================
+
+PROBLEMA REPORTADO:
+- Músicas locais funcionavam antes
+- Depois das alterações v2.0, passou a usar Internet Archive
+- Músicas MP3 estão na pasta audio/ mas não são usadas
+
+=================================================================
+CAUSA RAIZ IDENTIFICADA:
+=================================================================
+
+O sistema tem esta prioridade:
+
+1. PRIORIDADE 1: Músicas locais (audio/playlists.json)
+   → Se playlists.json carregar E tiver faixas → USA LOCAIS
+
+2. PRIORIDADE 2: Exploração da pasta (audio/wwi/, audio/wwii/, etc)
+   → Se JSON falhar, tenta ler índice da pasta → USA LOCAIS
+
+3. FALLBACK: Internet Archive
+   → Se nada acima funcionar → USA INTERNET ARCHIVE
+
+=================================================================
+VERIFICAÇÃO DOS FICHEIROS LOCAIS:
+=================================================================
+
+✅ playlists.json EXISTE: C:\aot-engenheiro-HOTAS5\audio\playlists.json
+
+✅ MP3s EXISTEM:
+   - audio/wwi/ → 3 ficheiros
+   - audio/wwii/ → 4 ficheiros  
+   - audio/modern/ → 4 ficheiros
+   TOTAL: 11 ficheiros MP3
+
+✅ NOMES NO JSON CORRESPONDEM AOS FICHEIROS:
+   wwi:
+   - aicanvas-into-the-storm-238686.mp3 ✅
+   - alanajordan-charlie-charleston-251735.mp3 ✅
+   - moonpub-energetic-fast-bigband-swing-463959 (1).mp3 ✅
+
+   wwii:
+   - hauntsync-1930s-big-band-swing-jazz-236170.mp3 ✅
+   - kaazoom-after-a-long-night-out-1930s-smooth-jazz-482703.mp3 ✅
+   - kaazoom-swinginx27-shoes-1940s-big-band-music-338047.mp3 ✅
+   - kaazoom-swing-that-jazz-1940s-big-band-dance-music-338045.mp3 ✅
+
+   modern:
+   - alexgrohl-war-535028.mp3 ✅
+   - billy_ziogas-steel-hammer-master-track-245953.mp3 ✅
+   - franzian-deo-war-documentary-history-467744.mp3 ✅
+   - paulyudin-war-493487.mp3 ✅
+
+=================================================================
+POSSÍVEIS CAUSAS DO PROBLEMA:
+=================================================================
+
+1. CACHE DO BROWSER
+   - Browser pode estar a usar versão antiga do playlists.json
+   - Solução: Ctrl + Shift + R (hard refresh)
+
+2. SERVIDOR NÃO INICIADO CORRETAMENTE
+   - Se não houver servidor local, fetch() falha
+   - Solução: Verificar se servidor está a correr
+
+3. TIMING DO CARREGAMENTO
+   - Radio.carregarPlaylists() pode não ter terminado antes de tocar
+   - Já está correto em app.js linha 1167: 
+     Radio.carregarPlaylists().then(()=>renderPlaylists());
+
+4. CORS POLICY
+   - Alguns browsers bloqueiam file:// protocol
+   - Solução: Usar servidor local (python -m http.server)
+
+5. PLAYLISTS.JSON NÃO CARREGA
+   - Caminho errado ou ficheiro corrompido
+   - Solução: Testar com TESTE_MUSICAS_LOCAIS.html
+
+=================================================================
+COMO TESTAR SE ESTÁ A FUNCIONAR:
+=================================================================
+
+1. Abrir servidor local:
+   cd C:\aot-engenheiro-HOTAS5
+   python -m http.server 8000
+
+2. Testar diagnóstico:
+   http://localhost:8000/TESTE_MUSICAS_LOCAIS.html
+
+   DEVE MOSTRAR:
+   ✅ playlists.json carregado!
+   ✅ 3 faixas em wwi
+   ✅ 4 faixas em wwii  
+   ✅ 4 faixas em modern
+   ✅ Radio.carregarPlaylists() funcionou!
+
+3. Testar na aplicação:
+   http://localhost:8000
+
+   - Abrir Definições
+   - Verificar mensagem abaixo de "Playlist":
+     ✅ CORRETO: "A usar as tuas músicas de audio/ — funcionam offline."
+     ❌ ERRADO: "Sem músicas locais. A usar... Internet Archive..."
+
+4. F12 Console para verificar erros
+
+=================================================================
+SE CONTINUAR A DAR INTERNET ARCHIVE:
+=================================================================
+
+Verificar no Console (F12):
+
+1. Procurar por:
+   - Erro ao carregar playlists.json
+   - CORS error
+   - 404 Not Found
+
+2. Na aba Network:
+   - Verificar se playlists.json foi carregado (status 200)
+   - Verificar se MP3s têm caminho correto: audio/wwi/nome.mp3
+
+3. No Console, digitar:
+   Radio.musica.locais
+
+   DEVE RETORNAR:
+   {
+     wwi: { nome: "Primeira Guerra", faixas: [...] },
+     wwii: { nome: "Segunda Guerra", faixas: [...] },
+     modern: { nome: "Moderna", faixas: [...] }
+   }
+
+   SE RETORNAR {} (vazio) → playlists.json não carregou!
+
+=================================================================
+GARANTIA:
+=================================================================
+
+✅ NÃO ALTEREI NENHUM CÓDIGO DE RÁDIO/MÚSICA
+✅ OS FICHEIROS MP3 ESTÃO INTACTOS
+✅ O playlists.json ESTÁ CORRETO
+✅ O SISTEMA DE PRIORIDADE ESTÁ INTACTO
+
+Se está a usar Internet Archive, é porque:
+- playlists.json não está a ser carregado (cache, CORS, servidor)
+- OU há algum erro JavaScript a impedir o carregamento
+
+SOLUÇÃO: Testar com TESTE_MUSICAS_LOCAIS.html para diagnosticar!
+
+=================================================================
+Data: 05/08/2026
+Ficheiro criado por: Claude (assistente IA)
+=================================================================

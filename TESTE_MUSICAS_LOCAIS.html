@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>Teste Músicas Locais</title>
+<style>
+body { font-family: Arial; padding: 20px; background: #0a100e; color: #dfeae6; }
+.ok { color: #4CAF50; }
+.erro { color: #F44336; }
+pre { background: #1a1a1a; padding: 10px; border-radius: 5px; overflow-x: auto; }
+</style>
+</head>
+<body>
+<h1>🎵 Teste de Músicas Locais</h1>
+
+<h2>1. Verificar playlists.json</h2>
+<div id="resultado1">A carregar...</div>
+
+<h2>2. Verificar MP3s</h2>
+<div id="resultado2">A carregar...</div>
+
+<h2>3. Verificar Audio.carregarPlaylists()</h2>
+<div id="resultado3">A carregar...</div>
+
+<script src="js/radio.js"></script>
+<script>
+async function testar() {
+  // Teste 1: Carregar playlists.json
+  try {
+    const r = await fetch('audio/playlists.json', {cache: 'no-cache'});
+    if (r.ok) {
+      const json = await r.json();
+      document.getElementById('resultado1').innerHTML = 
+        `<span class="ok">✅ playlists.json carregado!</span>
+        <pre>${JSON.stringify(json, null, 2).substring(0, 500)}...</pre>`;
+      
+      // Teste 2: Verificar se tem faixas
+      let html2 = '';
+      for (const era of ['wwi', 'wwii', 'modern']) {
+        const faixas = json[era]?.faixas || [];
+        html2 += `<p><strong>${era}</strong>: ${faixas.length} faixas</p>`;
+        faixas.forEach(f => {
+          html2 += `<p style="margin-left:20px;">→ ${f.f}</p>`;
+        });
+      }
+      document.getElementById('resultado2').innerHTML = html2;
+      
+    } else {
+      document.getElementById('resultado1').innerHTML = 
+        `<span class="erro">❌ Erro ao carregar playlists.json: ${r.status}</span>`;
+    }
+  } catch(e) {
+    document.getElementById('resultado1').innerHTML = 
+      `<span class="erro">❌ Erro: ${e.message}</span>`;
+  }
+  
+  // Teste 3: Testar sistema Radio
+  if (typeof Radio !== 'undefined' && Radio.carregarPlaylists) {
+    const sucesso = await Radio.carregarPlaylists();
+    const locais = Radio.musica.locais || {};
+    let html3 = sucesso ? '<span class="ok">✅ Radio.carregarPlaylists() funcionou!</span><br>' 
+                        : '<span class="erro">❌ Radio.carregarPlaylists() falhou</span><br>';
+    html3 += `<p>Playlists locais carregadas: ${Object.keys(locais).length}</p>`;
+    for (const [era, data] of Object.entries(locais)) {
+      html3 += `<p><strong>${era}</strong>: ${data.faixas.length} faixas</p>`;
+    }
+    document.getElementById('resultado3').innerHTML = html3;
+  } else {
+    document.getElementById('resultado3').innerHTML = 
+      '<span class="erro">❌ Radio.js não disponível</span>';
+  }
+}
+
+testar();
+</script>
+
+</body>
+</html>

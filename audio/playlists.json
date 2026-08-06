@@ -1,0 +1,76 @@
+{
+  "_leiame": "f=ficheiro, t=titulo, a=artista. Nomes de ficheiro devem coincidir EXACTAMENTE com os MP3 na pasta.",
+  "wwi": {
+    "nome": "Primeira Guerra",
+    "icone": "🎖️",
+    "faixas": [
+      {
+        "f": "aicanvas-into-the-storm-238686.mp3",
+        "t": "Into The Storm",
+        "a": "AI Canvas"
+      },
+      {
+        "f": "alanajordan-charlie-charleston-251735.mp3",
+        "t": "Charlie Charleston",
+        "a": "Alana Jordan"
+      },
+      {
+        "f": "moonpub-energetic-fast-bigband-swing-463959 (1).mp3",
+        "t": "Energetic Big Band Swing",
+        "a": "Moonpub"
+      }
+    ]
+  },
+  "wwii": {
+    "nome": "Segunda Guerra",
+    "icone": "✈️",
+    "faixas": [
+      {
+        "f": "hauntsync-1930s-big-band-swing-jazz-236170.mp3",
+        "t": "1930s Big Band Swing Jazz",
+        "a": "HauntSync"
+      },
+      {
+        "f": "kaazoom-after-a-long-night-out-1930s-smooth-jazz-482703.mp3",
+        "t": "After A Long Night Out",
+        "a": "Kaazoom"
+      },
+      {
+        "f": "kaazoom-swinginx27-shoes-1940s-big-band-music-338047.mp3",
+        "t": "Swingin' Shoes",
+        "a": "Kaazoom"
+      },
+      {
+        "f": "kaazoom-swing-that-jazz-1940s-big-band-dance-music-338045.mp3",
+        "t": "Swing That Jazz",
+        "a": "Kaazoom"
+      }
+    ]
+  },
+  "modern": {
+    "nome": "Moderna",
+    "icone": "🎵",
+    "faixas": [
+      {
+        "f": "alexgrohl-war-535028.mp3",
+        "t": "War",
+        "a": "Alex Grohl"
+      },
+      {
+        "f": "billy_ziogas-steel-hammer-master-track-245953.mp3",
+        "t": "Steel Hammer",
+        "a": "Billy Ziogas"
+      },
+      {
+        "f": "franzian-deo-war-documentary-history-467744.mp3",
+        "t": "War Documentary History",
+        "a": "Franzian Deo"
+      },
+      {
+        "f": "paulyudin-war-493487.mp3",
+        "t": "War",
+        "a": "Paul Yudin"
+      }
+    ]
+  }
+}

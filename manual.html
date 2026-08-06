@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Manual — AOT Engenheiro</title>
+<style>
+:root{--bg:#0b0b18;--card:#191a33;--card2:#22234a;--line:#2e3060;
+ --txt:#eceafd;--muted:#9a98c4;--dim:#6c6a96;--acc:#7c6cff;--amber:#ffb84d;--verde:#39d98a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:
+   radial-gradient(1200px 800px at 15% -10%, #1e1b52 0%, transparent 55%),
+   radial-gradient(900px 700px at 100% 0%, #2a1a4d 0%, transparent 50%),
+   linear-gradient(180deg,#0f1020 0%,#08080f 100%);
+ background-attachment:fixed;color:var(--txt);line-height:1.65;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+ padding:20px 16px 60px;max-width:780px;margin:0 auto}
+h1{font-size:1.5rem;margin-bottom:3px}
+.sub{color:var(--muted);font-size:.85rem;margin-bottom:8px}
+.card{background:rgba(25,26,51,.82);backdrop-filter:blur(12px);
+ border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;
+ box-shadow:0 6px 22px rgba(0,0,0,.35)}
+h2{font-size:1.05rem;color:var(--acc);margin-bottom:10px;display:flex;gap:9px;align-items:center}
+h3{font-size:.93rem;margin:15px 0 6px;color:var(--txt)}
+p{margin-bottom:9px;font-size:.92rem}
+ul,ol{margin:8px 0 8px 20px}
+li{margin-bottom:6px;font-size:.9rem}
+code{background:#0d0e1c;padding:2px 7px;border-radius:6px;color:var(--amber);font-size:.85em}
+.dica{background:rgba(124,108,255,.1);border-left:3px solid var(--acc);
+ border-radius:0 10px 10px 0;padding:11px 13px;margin:11px 0;font-size:.88rem}
+.aviso{background:rgba(255,184,77,.09);border-left:3px solid var(--amber);
+ border-radius:0 10px 10px 0;padding:11px 13px;margin:11px 0;font-size:.88rem}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin:10px 0}
+th{text-align:left;color:var(--muted);font-size:.7rem;text-transform:uppercase;
+ letter-spacing:1.2px;padding:6px 8px;border-bottom:1px solid var(--line)}
+td{padding:8px;border-bottom:1px solid rgba(46,48,96,.5);vertical-align:top}
+td:first-child{color:var(--verde);white-space:nowrap;font-weight:600}
+.fala{color:var(--verde);font-style:italic}
+.idx{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:6px}
+.idx a{display:block;padding:11px;background:var(--card2);border:1px solid var(--line);
+ border-radius:12px;color:var(--txt);text-decoration:none;font-size:.87rem}
+.idx a:active{border-color:var(--acc)}
+.foot{text-align:center;color:var(--dim);font-size:.78rem;margin-top:26px;
+ padding-top:18px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<h1>📖 Manual do AOT Engenheiro</h1>
+<p class="sub">Assistente de bordo para Aces of Thunder · PSVR2 · Thrustmaster HOTAS 5</p>
+
+<div class="card">
+  <h2>O que é isto</h2>
+  <p>Um <strong>engenheiro de bordo virtual</strong> que corre no telemóvel ao teu
+  lado enquanto jogas de óculos postos. Fala contigo em voz alta, responde a
+  perguntas, diz-te que botão premir e dá-te dados reais de cada avião.</p>
+  <p>Foi feito para resolver um problema concreto: <strong>com o PSVR2 na cara
+  não consegues consultar nada</strong>. Por isso quase tudo funciona por voz.</p>
+  <div class="idx">
+    <a href="#comecar">1. Começar</a>
+    <a href="#hangar">2. Hangar</a>
+    <a href="#missao">3. Missão</a>
+    <a href="#cockpit">4. Cockpit</a>
+    <a href="#voz">5. Falar</a>
+    <a href="#radio">6. Rádio</a>
+    <a href="#defs">7. Definições</a>
+    <a href="#truques">8. Truques</a>
+  </div>
+</div>
+
+<div class="card" id="comecar">
+  <h2>1 · Começar</h2>
+  <p>No primeiro arranque a app pergunta-te <strong>o nome</strong>, como queres
+  ser tratado (<em>por tu</em> ou <em>Comandante</em>) e qual dos dois engenheiros
+  preferes.</p>
+  <table>
+    <tr><th>Engenheiro</th><th>Como é</th></tr>
+    <tr><td>Sgt. Vieira</td><td>Seco e directo. Diz o essencial e cala-se. Fala depressa, como quem dá uma ordem.</td></tr>
+    <tr><td>Velho Aníbal</td><td>Já viu de tudo. Ajuda bem, mas atira um comentário de vez em quando. Fala mais calmo.</td></tr>
+  </table>
+  <div class="dica">Podes trocar de engenheiro <strong>a meio do voo</strong>,
+  dizendo <span class="fala">"troca de engenheiro"</span>.</div>
+</div>
+
+<div class="card" id="hangar">
+  <h2>2 · Hangar — escolher o avião</h2>
+  <p>Os <strong>29 aviões</strong> do jogo, organizados por nação. Desliza o
+  carrossel para ver as fotos e a ficha de cada um.</p>
+  <h3>O que mostra cada cartão</h3>
+  <ul>
+    <li><strong>Fabricante, tipo e tripulação</strong> — dados oficiais</li>
+    <li><strong>Mostrador</strong> — mph, km/h ou nós (ver secção 8)</li>
+    <li><strong>Estilo de combate</strong> — Boom &amp; Zoom, Turn Fighting, etc.</li>
+    <li><strong>Standard ou Deluxe</strong> — em que edição vem</li>
+  </ul>
+  <div class="dica">Toca uma vez para <strong>centrar</strong> o avião.
+  Toca outra vez no cartão já seleccionado para <strong>abrir a wiki do
+  War Thunder</strong> desse avião.</div>
+</div>
+
+<div class="card" id="missao">
+  <h2>3 · Configurar missão</h2>
+  <p>Reproduz o que escolhes no <em>Custom Battles</em> do jogo, e o engenheiro
+  aconselha-te em cada passo.</p>
+  <table>
+    <tr><th>Opção</th><th>O que faz</th></tr>
+    <tr><td>Mapa</td><td>15 mapas com contexto histórico e efeméride</td></tr>
+    <tr><td>Hora do dia</td><td>Amanhecer, dia, entardecer, noite — com dica táctica</td></tr>
+    <tr><td>Meteorologia</td><td>Limpo, nublado, chuva</td></tr>
+    <tr><td>Combustível</td><td>Limitado ou não, com prós e contras</td></tr>
+    <tr><td>Armamento</td><td>Cinto de munição e carga por tipo de missão</td></tr>
+  </table>
+  <h3>Aviões ideais</h3>
+  <p>Se o avião não encaixar no mapa, o engenheiro avisa. O botão
+  <strong>✈️ Ver aviões ideais</strong> mostra só os recomendados, com foto,
+  e troca com um toque.</p>
+  <div class="dica">Também podes dizer
+  <span class="fala">"troca de avião para o Spitfire"</span> — ou usar alcunhas
+  como <em>Mustang</em>, <em>Zero</em>, <em>Corsair</em>.</div>
+</div>
+
+<div class="card" id="cockpit">
+  <h2>4 · Cockpit — a conversa</h2>
+  <p>É aqui que passas o voo. O engenheiro acompanha-te por fases:
+  <em>em terra → a descolar → em subida → cruzeiro → aproximação</em>.</p>
+  <h3>Três formas de falar</h3>
+  <ul>
+    <li><strong>🎤 Botão grande</strong> — mantém premido enquanto falas</li>
+    <li><strong>🎙️ Escuta contínua</strong> — fica sempre a ouvir</li>
+    <li><strong>⌨️ Teclado</strong> — para quando não podes falar</li>
+  </ul>
+  <h3>Acções rápidas</h3>
+  <p>Os botões por cima da barra do microfone fazem as perguntas mais comuns
+  sem teres de falar: descolar, qual a tecla, armamento, tácticas, aterrar,
+  emergência.</p>
+  <div class="aviso"><strong>Botão 🔇 Parar</strong> — aparece sozinho enquanto
+  o engenheiro fala. Serve para o calar a meio. Mudar de ecrã também o cala.</div>
+</div>
+
+<div class="card" id="voz">
+  <h2>5 · O que podes dizer</h2>
+  <p>Não precisas de decorar frases. O engenheiro percebe sinónimos e o
+  contexto da conversa.</p>
+
+  <h3>Voo</h3>
+  <table>
+    <tr><td>"vamos descolar"</td><td>instruções + velocidade de rotação</td></tr>
+    <tr><td>"já estou no ar"</td><td>manda recolher o trem</td></tr>
+    <tr><td>"e agora?"</td><td>diz o passo seguinte da fase actual</td></tr>
+    <tr><td>"vamos aterrar"</td><td>prepara a aproximação</td></tr>
+  </table>
+
+  <h3>Comandos</h3>
+  <table>
+    <tr><td>"qual é a tecla?"</td><td>diz o botão do <em>último assunto falado</em></td></tr>
+    <tr><td>"como disparar"</td><td>botão das metralhadoras</td></tr>
+    <tr><td>"e os flaps?"</td><td>botão dos flaps</td></tr>
+  </table>
+  <div class="dica"><strong>Memória de contexto:</strong> se ele disser
+  "recolhe o trem" e tu perguntares só <span class="fala">"qual é a tecla?"</span>,
+  ele sabe que falas do trem. Ao fim de 90 segundos pergunta para confirmar.</div>
+
+  <h3>Informação</h3>
+  <table>
+    <tr><td>"fala-me deste avião"</td><td>história e curiosidades</td></tr>
+    <tr><td>"que batalha é esta?"</td><td>contexto do mapa e efeméride</td></tr>
+    <tr><td>"que velocidade?"</td><td>limites de trem, flaps e estrutural</td></tr>
+    <tr><td>"que armamento levo?"</td><td>cinto recomendado e porquê</td></tr>
+    <tr><td>"que tácticas uso?"</td><td>como voar este avião</td></tr>
+  </table>
+
+  <h3>Emergências</h3>
+  <table>
+    <tr><td>"tenho um na cauda"</td><td>manobra defensiva</td></tr>
+    <tr><td>"estou a arder"</td><td>como apagar o fogo</td></tr>
+    <tr><td>"entrei em parafuso"</td><td>recuperação passo a passo</td></tr>
+  </table>
+</div>
+
+<div class="card" id="radio">
+  <h2>6 · Rádio de época</h2>
+  <p>Música da época e ambiente de rádio antigo: estática, zumbido eléctrico
+  e o ronronar de um motor.</p>
+  <h3>Leitor no cockpit</h3>
+  <p><code>⏮</code> anterior · <code>▶</code> tocar/pausa · <code>⏹</code> parar ·
+  <code>⏭</code> seguinte · <code>🔀</code> aleatório · <code>🔉 🔊</code> volume</p>
+  <h3>Por voz</h3>
+  <table>
+    <tr><td>"liga o rádio"</td><td>liga e anuncia a faixa</td></tr>
+    <tr><td>"muda de faixa"</td><td>salta (também "não gosto desta")</td></tr>
+    <tr><td>"que música é esta?"</td><td>título e ano</td></tr>
+    <tr><td>"desliga a música"</td><td>pára</td></tr>
+  </table>
+  <h3>Playlists</h3>
+  <ul>
+    <li><strong>🔄 Automática</strong> — segue o avião (WWI → música WWI)</li>
+    <li><strong>🎲 Mistura</strong> — junta as três eras</li>
+    <li><strong>Fixa</strong> — sempre a mesma era</li>
+  </ul>
+  <div class="dica">Podes usar <strong>as tuas músicas</strong>: põe os MP3 em
+  <code>audio/wwii/</code> e regista-os com o gerador em
+  <code>audio/gerar-playlists.html</code>. Assim funcionam offline.</div>
+  <p>Em voo a música continua, mas baixa automaticamente para não tapar a voz.
+  Podes desligar isso ou ajustar quanto baixa.</p>
+</div>
+
+<div class="card" id="defs">
+  <h2>7 · Definições</h2>
+  <table>
+    <tr><td>🎨 Tema</td><td>3 modernos (gradiente) + 5 clássicos do jogo</td></tr>
+    <tr><td>🌍 Idioma</td><td>Português PT, Português BR, English</td></tr>
+    <tr><td>Voz</td><td>escolher voz, velocidade e tom</td></tr>
+    <tr><td>📻 Rádio</td><td>playlist, volumes, comportamento em voo</td></tr>
+    <tr><td>🕹️ HOTAS</td><td>configurar os teus botões</td></tr>
+    <tr><td>📐 Unidades</td><td>tabela de mph / km/h / nós</td></tr>
+    <tr><td>📋 Registo</td><td>histórico das conversas, exportável</td></tr>
+  </table>
+  <div class="aviso"><strong>Botões do HOTAS:</strong> o Aces of Thunder não
+  traz perfil pré-definido, cada um mapeia à sua maneira. Regista aqui o que
+  usaste e o engenheiro passa a dizer <em>os teus</em> botões.</div>
+</div>
+
+<div class="card" id="truques">
+  <h2>8 · Coisas que convém saber</h2>
+
+  <h3>⚠️ As unidades dos mostradores</h3>
+  <p>O jogo modela os instrumentos conforme a nacionalidade real do avião, e
+  <strong>isso não muda nas definições</strong>. São três sistemas:</p>
+  <table>
+    <tr><td>🇺🇸 🇬🇧</td><td>milhas por hora (mph)</td></tr>
+    <tr><td>🇩🇪 🇷🇺</td><td>quilómetros por hora</td></tr>
+    <tr><td>🇯🇵 Marinha</td><td><strong>nós</strong> — Zero, Raiden, Suisei</td></tr>
+  </table>
+  <p>O Ki-61 é japonês mas do <em>Exército</em>, e usa km/h. O engenheiro fala
+  sempre na unidade certa do teu avião.</p>
+
+  <h3>IAS vs TAS</h3>
+  <p>O mostrador indica velocidade <em>indicada</em>, as fichas publicam a
+  <em>verdadeira</em>. A 6000 m a diferença passa dos 170 km/h. Por isso o
+  engenheiro só te dá limites de trem e flaps — esses batem certo com o ponteiro.</p>
+
+  <h3>Botão voltar</h3>
+  <p>O botão do telemóvel volta ao ecrã anterior em vez de fechar a app.
+  Fecha primeiro os menus abertos. Só sai no ecrã inicial.</p>
+
+  <h3>Funciona offline</h3>
+  <p>Depois da primeira visita, tudo funciona sem internet — excepto a música
+  do Internet Archive. Com músicas locais, offline total.</p>
+</div>
+
+<p class="foot">AOT Engenheiro · por José Duarte<br>
+Feito para o Aces of Thunder da Gaijin Entertainment</p>
+
+</body>
+</html>

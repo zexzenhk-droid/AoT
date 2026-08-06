@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a100e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>AOT Engenheiro</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════ 1. SPLASH ══════════════ -->
+<section id="scSplash" class="screen on splash">
+  <div class="splash-art"></div>
+  <div class="splash-body">
+    <p class="kicker" data-i18n="assistente">Assistente de bordo</p>
+    <h1>AOT <em>Engenheiro</em></h1>
+    <p class="sub">Aces of Thunder · PSVR2 · HOTAS 5</p>
+    <button class="btn big" id="btIniciar" data-i18n="iniciar">Iniciar sistemas</button>
+    <p class="autor">por José Duarte · <span id="versaoSplash">v?</span></p>
+  </div>
+</section>
+
+<!-- ══════════════ 2. REGISTO ══════════════ -->
+<section id="scRegisto" class="screen">
+  <div class="wrap">
+    <div class="card">
+      <h2 data-i18n="identificacao">Identificação</h2>
+      <label class="lbl" data-i18n="teuNome">O teu nome</label>
+      <input type="text" id="inNome" data-i18n-ph="teuNome" placeholder="Ex.: José, Maverick…" autocomplete="off">
+      <p class="err" id="errNome"></p>
+
+      <label class="lbl" style="margin-top:16px" data-i18n="comoTratado">Como queres ser tratado?</label>
+      <div class="opts" id="optTrat">
+        <button class="opt on" data-t="tu">
+          <b data-i18n="porTu">Por tu</b><small>"Recolhe o trem, José."</small>
+        </button>
+        <button class="opt" data-t="comandante">
+          <b data-i18n="comandante">Comandante</b><small>"Comandante José, trem em cima."</small>
+        </button>
+      </div>
+
+      <label class="lbl" style="margin-top:16px" data-i18n="escolheEng">Escolhe o teu engenheiro</label>
+      <div class="opts" id="optPersona">
+        <button class="opt on" data-p="militar">
+          <b>Sgt. Vieira</b><small>Seco e directo. Diz o essencial.</small>
+        </button>
+        <button class="opt" data-p="veterano">
+          <b>Velho Aníbal</b><small>Já viu de tudo. Ajuda com um comentário.</small>
+        </button>
+      </div>
+      <p class="hint" data-i18n="podesTrocar">Podes trocar depois — até a meio do voo.</p>
+      <button class="btn" id="btRegistar" data-i18n="continuar">Continuar</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 3. HANGAR ══════════════ -->
+<section id="scHangar" class="screen">
+  <header class="top">
+    <button class="ico" data-home="1" title="Início">🏠</button>
+    <div><p class="kicker" id="hgSaud" data-i18n="hangar">Hangar</p><h2 data-i18n="escolheAviao">Escolhe o avião</h2></div>
+    <button class="ico" data-defs="1" title="Definições">⚙️</button>
+  </header>
+  <div class="wrap">
+    <div class="chips" id="chipsNacao"></div>
+    <div class="carousel" id="carousel"></div>
+    <p class="hint center" data-i18n="desliza">← desliza para ver os aviões →</p>
+    <button class="btn" id="btConfirmar" data-i18n="confirmar">Confirmar aeronave</button>
+  </div>
+</section>
+
+<!-- ══════════════ 4. MISSÃO ══════════════ -->
+<section id="scMissao" class="screen">
+  <header class="top">
+    <button class="ico" data-volta="scHangar" title="Voltar">←</button>
+    <div><p class="kicker">Custom Battles</p><h2 data-i18n="configMissao">Configurar missão</h2></div>
+    <button class="ico" data-home="1" title="Início">🏠</button>
+    <button class="ico" data-defs="1" title="Definições">⚙️</button>
+  </header>
+  <div class="wrap">
+    <div class="card">
+      <h3>🗺️ <span data-i18n="mapa">Mapa</span></h3>
+      <select id="selMapa" class="sel"></select>
+      <div id="mapaInfo" class="info"></div>
+    </div>
+
+    <div class="card">
+      <h3>🕐 <span data-i18n="horaDia">Hora do dia</span></h3>
+      <div class="opts wrap3" id="optHora"></div>
+      <p class="tt" id="ttHora"></p>
+    </div>
+
+    <div class="card">
+      <h3>🌤️ <span data-i18n="meteo">Meteorologia</span></h3>
+      <div class="opts wrap3" id="optMeteo"></div>
+      <p class="tt" id="ttMeteo"></p>
+    </div>
+
+    <div class="card">
+      <h3>⛽ <span data-i18n="combustivel">Combustível limitado</span></h3>
+      <div class="opts" id="optComb">
+        <button class="opt on" data-c="0"><b data-i18n="desligado">Desligado</b><small data-i18n="recomendado">Recomendado</small></button>
+        <button class="opt" data-c="1"><b data-i18n="ligado">Ligado</b><small data-i18n="maisLeve">Mais leve, mais risco</small></button>
+      </div>
+      <p class="tt" id="ttComb"></p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 <span data-i18n="armamento">Armamento</span></h3>
+      <label class="lbl" data-i18n="tipoMissao">Tipo de missão</label>
+      <div class="opts wrap3" id="optTipoMissao"></div>
+      <div id="armaInfo" class="info" style="margin-top:10px"></div>
+    </div>
+
+    <!-- [v2.0] Novos seletores de Patentes, Missões e Mapas -->
+    <div id="seletorPatentes"></div>
+    <div id="seletorMissoes"></div>
+    <div id="seletorMapas"></div>
+    <div id="recomendacaoArmamento"></div>
+    <!-- Fim novos seletores v2.0 -->
+
+    <div class="card brief">
+      <h3>📋 <span data-i18n="briefing">Briefing</span></h3>
+      <div id="briefTxt" class="info"></div>
+      <button class="btn ghost" id="btIdeais" data-i18n="verIdeais">✈️ Ver aviões ideais para esta missão</button>
+      <button class="btn ghost" id="btOuvirBrief" data-i18n="ouvirBrief">🔊 Ouvir briefing</button>
+    </div>
+
+    <button class="btn" id="btParaVoo" data-i18n="paraCockpit">Para o cockpit →</button>
+  </div>
+</section>
+
+<!-- ══════════════ 5. COCKPIT (conversa) ══════════════ -->
+<section id="scVoo" class="screen">
+  <header class="top">
+    <button class="ico" data-volta="scMissao" title="Voltar">←</button>
+    <div>
+      <p class="kicker" id="vooAviao">—</p>
+      <h2 id="vooFase" data-i18n="emTerra">Em terra</h2>
+    </div>
+    <button class="ico" id="btUnidades" title="Unidades">📐</button>
+    <button class="ico" data-defs="1" title="Definições">⚙️</button>
+  </header>
+
+  <!-- leitor de música, sempre visível no cockpit -->
+  <div id="radioBar" class="radiobar hide">
+    <div class="rb-linha1">
+      <div class="rb-txt">
+        <b id="rbTitulo" data-i18n="radioDesligado">Rádio desligado</b>
+        <small id="rbArtista" data-i18n="tocaLigar">toca em ▶ para ligar</small>
+      </div>
+      <span class="rb-vol" id="rbVolTxt">55%</span>
+    </div>
+    <div class="rb-linha2">
+      <button class="rb-btn" id="rbAnt" title="Anterior">⏮</button>
+      <button class="rb-btn acc" id="rbPlay" title="Tocar/pausa">▶</button>
+      <button class="rb-btn" id="rbStop" title="Parar">⏹</button>
+      <button class="rb-btn" id="rbProx" title="Seguinte">⏭</button>
+      <button class="rb-btn" id="rbAlea" title="Aleatório">🔀</button>
+      <button class="rb-btn" id="rbMenos" title="Menos volume">🔉</button>
+      <button class="rb-btn" id="rbMais" title="Mais volume">🔊</button>
+    </div>
+  </div>
+
+  <div id="chat" class="chat"></div>
+  <div class="acoes" id="acoesRapidas"></div>
+
+  <div class="barra">
+    <button id="btEscuta" class="mic-toggle" title="Escuta contínua">🎙️</button>
+    <button id="btFalar" class="mic-big">
+      <span class="mic-ico">🎤</span>
+      <span class="mic-txt" data-i18n="manterPremido">Manter premido</span>
+    </button>
+    <button id="btTeclado" class="mic-toggle" title="Escrever">⌨️</button>
+  </div>
+  <div class="teclado hide" id="zonaTeclado">
+    <input type="text" id="inTexto" data-i18n-ph="escrever" placeholder="Escreve ao engenheiro…">
+    <button id="btEnviar">➤</button>
+  </div>
+  <p class="estado" id="estadoMic" data-i18n="tocaFalar">Toca e mantém para falar</p>
+</section>
+
+<!-- ══════════════ DEFINIÇÕES ══════════════ -->
+<div id="modalDefs" class="modal">
+  <div class="modal-box">
+    <div class="modal-top"><h3 data-i18n="definicoes">Definições</h3><button class="ico" id="btFecharDefs">✕</button></div>
+
+    <label class="lbl" data-i18n="engenheiro">Engenheiro</label>
+    <div class="opts" id="defPersona">
+      <button class="opt" data-p="militar"><b>Sgt. Vieira</b><small>Militar</small></button>
+      <button class="opt" data-p="veterano"><b>Velho Aníbal</b><small>Veterano</small></button>
+    </div>
+
+    <label class="lbl" style="margin-top:14px" data-i18n="tratamento">Tratamento</label>
+    <div class="opts" id="defTrat">
+      <button class="opt" data-t="tu"><b data-i18n="porTu">Por tu</b></button>
+      <button class="opt" data-t="comandante"><b data-i18n="comandante">Comandante</b></button>
+    </div>
+
+    <label class="lbl" style="margin-top:14px" data-i18n="nomePiloto">Nome do piloto</label>
+    <input type="text" id="defNome" autocomplete="off">
+
+    <label class="lbl" data-i18n="idioma">🌍 Idioma</label>
+    <select id="selIdioma" class="sel"></select>
+
+    <label class="lbl" style="margin-top:18px" data-i18n="vozEng">Voz do engenheiro</label>
+    <div class="row-sw"><span data-i18n="vozActivada">Voz activada</span>
+      <label class="sw"><input type="checkbox" id="swVoz" checked><i></i></label></div>
+    <select id="selVozEngenheiro" class="sel" style="margin-top:8px"></select>
+    <p style="font-size:12px;opacity:.6;margin:6px 0 14px">
+      🎙️ Voz local de alta qualidade (Piper). Independente do idioma da aplicação.
+    </p>
+    <details style="margin-bottom:10px">
+      <summary style="font-size:13px;opacity:.7;cursor:pointer">Voz do sistema (reserva)</summary>
+      <select id="selVoz" class="sel" style="margin-top:8px"></select>
+    </details>
+
+    <div class="sld"><span data-i18n="velocidade">Velocidade</span><b id="vlVel">100%</b></div>
+    <input type="range" id="vozVel" min="70" max="150" value="100" class="range">
+    <div class="sld"><span data-i18n="tom">Tom</span><b id="vlTom">100%</b></div>
+    <input type="range" id="vozTom" min="70" max="130" value="100" class="range">
+    <div class="sld"><span data-i18n="volumeVoz">Volume</span><b id="vlVol">100%</b></div>
+    <input type="range" id="vozVol" min="0" max="100" value="100" class="range">
+    <button class="btn ghost" id="btTestarVoz" style="margin-top:8px" data-i18n="testarVoz">🔊 Testar esta voz</button>
+    <p class="hint" data-i18n-html="dicaVoz">Se a voz soar arrastada, sobe a <b>Velocidade</b>. Vozes com tom muito baixo perdem energia.</p>
+    <button class="btn ghost" id="btAjudaVoz" style="margin-top:6px" data-i18n="soFeminina">❓ Só tenho voz feminina</button>
+
+    <label class="lbl" style="margin-top:18px" data-i18n="tema">🎨 Tema</label>
+    <div class="opts wrap3" id="optTema"></div>
+
+    <!-- [v2.0] Sliders de Tamanho -->
+    <label class="lbl" style="margin-top:18px">📏 Acessibilidade</label>
+    <div class="sld"><span>Tamanho do Texto</span><b id="vlFonte">100%</b></div>
+    <input type="range" id="tamanhoFonte" min="70" max="150" value="100" class="range">
+    <div class="sld"><span>Tamanho dos Botões (Cockpit)</span><b id="vlBotoes">100%</b></div>
+    <input type="range" id="tamanhoBotoesCockpit" min="80" max="200" value="100" class="range">
+    <p class="hint">Ajusta o tamanho do texto e botões para melhor visibilidade no PSVR2.</p>
+
+    <label class="lbl" style="margin-top:18px" data-i18n="radio">📻 Rádio de época</label>
+    <div class="row-sw"><span data-i18n="ligado">Ligado</span>
+      <label class="sw"><input type="checkbox" id="swRadio"><i></i></label></div>
+    <label class="lbl" style="margin-top:12px" data-i18n="playlist">Playlist</label>
+    <div class="opts" id="optFontePlaylist" style="margin-bottom:8px">
+      <button class="opt" id="btFonteLocal">
+        <b>&#128193; Musicas Locais</b><small>Ficheiros em audio/</small>
+      </button>
+      <button class="opt" id="btFonteInternet">
+        <b>&#127760; Internet Archive</b><small>Radio online gratuita</small>
+      </button>
+    </div>
+    <select id="selPlaylist" class="sel"></select>
+    <div class="sld"><span data-i18n="volMusica">Volume da música</span><b id="vlMusica">55%</b></div>
+    <input type="range" id="volMusica" min="0" max="100" value="55" class="range">
+    <div class="sld"><span data-i18n="volAmbiente">Ambiente (estática, motor)</span><b id="vlRadio">35%</b></div>
+    <input type="range" id="volRadio" min="0" max="100" value="35" class="range">
+    <div class="row-sw" style="margin-top:6px"><span data-i18n="musicaVoo">Música durante o voo</span>
+      <label class="sw"><input type="checkbox" id="swMusVoo" checked><i></i></label></div>
+    <div class="sld"><span data-i18n="discricao">Discrição em voo</span><b id="vlDisc">35%</b></div>
+    <input type="range" id="volDisc" min="10" max="100" value="35" class="range">
+
+    <div id="agora" class="agora hide">
+      <div class="ag-txt">
+        <span class="ag-lbl" data-i18n="aTocar">▶ a tocar</span>
+        <b id="agTitulo">—</b>
+        <small id="agArtista"></small>
+      </div>
+      <button class="ico" id="btProxima" title="Faixa seguinte">⏭</button>
+    </div>
+    <p class="hint" id="hintAudio"></p>
+
+    <button class="btn ghost" id="btBindings" data-i18n="configBotoes">🕹️ Configurar botões do HOTAS</button>
+    <button class="btn ghost" id="btVerUnidades" data-i18n="unidades">📐 Unidades dos mostradores</button>
+    <button class="btn ghost" id="btManual" data-i18n="manual">📖 Manual da aplicação</button>
+    <button class="btn ghost" id="btLog" data-i18n="registo">📋 Registo das conversas</button>
+    <button class="btn ghost danger" id="btReset" data-i18n="apagarTudo">Apagar dados e recomeçar</button>
+
+    <div style="margin-top:18px;text-align:center;opacity:.75;font-size:.85rem">
+      <span id="versaoDefs">v?</span> ·
+      <button id="btComoAtualizar" data-i18n="comoAtualizar" style="background:none;border:none;color:var(--acc);cursor:pointer;text-decoration:underline;font-size:.85rem;padding:0">Como atualizar?</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ AVIÕES IDEAIS ══════════════ -->
+<div id="modalIdeais" class="modal">
+  <div class="modal-box">
+    <div class="modal-top"><h3 id="ttIdeais">Aviões ideais</h3><button class="ico" id="btFecharIdeais">✕</button></div>
+    <p class="hint" id="subIdeais"></p>
+    <div id="listaIdeais" class="ideais"></div>
+    <button class="btn ghost" id="btVerTodos" data-i18n="verTodos">Ver todos os aviões →</button>
+  </div>
+</div>
+
+<!-- ══════════════ AJUDA — VOZES ══════════════ -->
+<div id="modalVoz" class="modal">
+  <div class="modal-box">
+    <div class="modal-top"><h3 data-i18n="voz_titulo">Instalar vozes masculinas</h3><button class="ico" id="btFecharVoz">✕</button></div>
+    <p class="hint" data-i18n="voz_intro">A app usa as vozes instaladas no sistema. Não as consigo criar — mas podes acrescentar mais, e depois aparecem na lista.</p>
+
+    <h4 style="color:var(--acc);font-size:.9rem;margin:16px 0 6px" data-i18n="voz_android">🤖 Android</h4>
+    <p class="info" data-i18n-html="voz_android_pass">1. Definições → Gestão geral (ou Sistema) → Idioma → <b>Conversão de texto em voz</b><br>2. Motor preferido: <b>Voz do Google</b> → ⚙️<br>3. <b>Instalar dados de voz</b> → Português (Portugal)<br>4. Descarrega o pacote e escolhe uma voz masculina<br>5. Volta à app e recarrega — aparece no seletor</p>
+
+    <h4 style="color:var(--acc);font-size:.9rem;margin:16px 0 6px" data-i18n="voz_windows">🪟 Windows</h4>
+    <p class="info" data-i18n-html="voz_windows_pass">O Windows traz só a <b>Maria</b> (feminina) em português. Para ter masculina:<br><br><b>Opção A — vozes naturais (recomendado)</b><br>Definições → Hora e idioma → Voz → <b>Adicionar voz</b><br>Escolhe Português (Portugal) ou Brasil.<br>As vozes <i>Natural</i> do Brasil incluem masculinas (<b>Antonio</b>, <b>Fabio</b>, <b>Julio</b>) e soam muito melhor.<br><br><b>Opção B — usar o Edge</b><br>O Microsoft Edge traz dezenas de vozes online, muitas masculinas. Abre a app no Edge em vez do Chrome e verás a lista maior.<br><br><b>Opção C — pacote de idioma completo</b><br>Definições → Idioma → Adicionar idioma → Português (Brasil) → marca <i>Conversão de texto em voz</i></p>
+
+    <p class="hint" data-i18n="voz_dica">💡 Sotaque brasileiro num engenheiro de bordo? Nada contra — e são as únicas vozes masculinas de qualidade em português no Windows.</p>
+  </div>
+</div>
+
+<!-- ══════════════ REGISTO ══════════════ -->
+<div id="modalLog" class="modal">
+  <div class="modal-box">
+    <div class="modal-top"><h3 data-i18n="registo">Registo das conversas</h3><button class="ico" id="btFecharLog">✕</button></div>
+    <p class="hint" id="logInfo"></p>
+    <div id="listaLog" class="loglist"></div>
+    <button class="btn ghost" id="btExportarLog" data-i18n="exportar">💾 Exportar para ficheiro</button>
+    <button class="btn ghost danger" id="btLimparLog" data-i18n="limpar">Limpar registo</button>
+  </div>
+</div>
+
+<!-- ══════════════ ESQUEMAS — lista ══════════════ -->
+<div id="modalEsquemas" class="modal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h3 data-i18n="hotasTitulo">Botões dos Controladores</h3>
+      <button class="ico" id="btFecharEsquemas">✕</button>
+    </div>
+    <p class="hint">Só um esquema pode estar ligado de cada vez. Toca no nome para editar.</p>
+    <div id="listaEsquemas"></div>
+    <button class="btn ghost" id="btAdicionarEsquema">➕ Adicionar esquema</button>
+  </div>
+</div>
+
+<!-- ══════════════ ESQUEMAS — editor de um esquema ══════════════ -->
+<div id="modalEsquemaEditor" class="modal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <input type="text" id="inNomeEsquema" class="esq-titulo-input" placeholder="Nome do esquema">
+      <button class="ico" id="btFecharEditorEsquema">✕</button>
+    </div>
+    <div class="esq-acoes-topo">
+      <button class="ico" id="btApagarEsquema" title="Apagar">🗑️</button>
+      <button class="ico" id="btDuplicarEsquema" title="Duplicar">📄</button>
+      <button class="ico" id="btPartilharEsquema" title="Partilhar">📤</button>
+    </div>
+    <div id="listaFuncoes"></div>
+    <button class="btn" id="btGuardarEsquema">Guardar</button>
+  </div>
+</div>
+
+<!-- ══════════════ EDITAR NOME + SUBTÍTULO DE UMA FUNÇÃO ══════════════ -->
+<div id="modalEditarFuncao" class="modal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h3>Editar função</h3>
+      <button class="ico" id="btFecharEditarFuncao">✕</button>
+    </div>
+    <label class="lbl">Função</label>
+    <input type="text" id="inNomeFuncao" placeholder="Ex.: Metralhadoras">
+    <label class="lbl" style="margin-top:14px">Por baixo (ex.: dedo, onde fica)</label>
+    <input type="text" id="inSubFuncao" placeholder="Ex.: indicador direito">
+    <button class="btn" id="btGuardarEditarFuncao">Guardar</button>
+  </div>
+</div>
+
+<!-- ══════════════ SELETOR FLUTUANTE DE BOTÃO ══════════════ -->
+<div id="modalSeletorBotao" class="modal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h3>Escolhe o botão</h3>
+      <button class="ico" id="btFecharSeletorBotao">✕</button>
+    </div>
+    <div class="opts wrap3" id="listaBotoesSeletor"></div>
+  </div>
+</div>
+
+<!-- ══════════════ COMO ATUALIZAR ══════════════ -->
+<div id="modalUpdate" class="modal">
+  <div class="modal-box">
+    <div class="modal-top"><h3 data-i18n="updateTitulo">🔄 Como atualizar</h3><button class="ico" id="btFecharUpdate">✕</button></div>
+    <p class="hint"><span data-i18n="updateVersaoAtual">Versão atual:</span> <b id="updateVersaoAtual">v?</b> · <span data-i18n="updateUltima">Última no servidor:</span> <b id="updateVersaoNova">v?</b></p>
+    <div id="updateNovidades" class="info" style="margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:10px"></div>
+
+    <h4 style="color:var(--acc);font-size:.9rem;margin:16px 0 6px">📱 Android</h4>
+    <p class="info" data-i18n-html="updateAndroid">1. Fecha completamente a app (arrasta para cima e liberta)<br>2. Volta a abrir — a nova versão instala sozinha<br><br><b>Se não atualizar:</b><br>1. Definições → Apps → AOT Engenheiro<br>2. Armazenamento → Limpar dados<br>3. Abre a app novamente</p>
+
+    <h4 style="color:var(--acc);font-size:.9rem;margin:16px 0 6px">💻 PC</h4>
+    <p class="info" data-i18n-html="updatePC">1. Pressiona <b>Ctrl + Shift + R</b><br>2. Ou fecha o browser todo e volta a abrir<br><br><b>Se não atualizar:</b><br>1. F12 → separador <b>Application</b><br>2. <b>Service Workers</b> → Unregister<br>3. Ctrl + Shift + R</p>
+  </div>
+</div>
+
+<button id="btCalar" class="calar" title="Parar a fala" data-i18n="pararFala">🔇 Parar</button>
+<div id="toast"></div>
+
+<script type="module" src="js/piper-tts.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/temas.js"></script>
+<script src="js/aircraft.js"></script>
+<script src="js/unidades.js"></script>
+<script src="js/limites.js"></script>
+<script src="js/conhecimento.js"></script>
+<script src="js/missoes.js"></script>
+<!-- [v2.0] Novos módulos de dados -->
+<script src="js/missoes_v2.js"></script>
+<script src="js/mapas.js"></script>
+<script src="js/patentes.js"></script>
+<!-- Fim módulos v2.0 -->
+<script src="js/dialogo.js"></script>
+<script src="js/radio.js"></script>
+<script src="js/app.js"></script>
+<script src="js/esquemas.js"></script>
+</body>
+</html>
+

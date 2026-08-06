@@ -1,0 +1,637 @@
+/* ============================================================
+   AOT ENGENHEIRO — estilo cockpit / cartaz de época
+   ============================================================ */
+:root{
+  --bg:#0a100e; --bg2:#0d1614;
+  --card:#152220; --card2:#1b2b28; --line:#26403a;
+  --txt:#dfeae6; --muted:#7f9a92; --dim:#5c7269;
+  --acc:#39d98a; --acc2:#1f8f5c; --acc3:#0f3a2a;
+  --amber:#ffb020; --red:#ff5555; --blue:#7dd3fc;
+  --r:14px;
+  --safeT:env(safe-area-inset-top); --safeB:env(safe-area-inset-bottom);
+  /* [v2.0] Tamanhos personalizáveis */
+  --font-scale: 1;
+  --btn-scale: 1;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:calc(16px * var(--font-scale));line-height:1.5;overscroll-behavior:none;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,select{font:inherit}
+.hide{display:none!important}
+
+/* ---------- ECRÃS ---------- */
+.screen{position:fixed;inset:0;display:none;flex-direction:column;overflow:hidden}
+.screen.on{display:flex;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:16px 16px calc(24px + var(--safeB));max-width:720px;width:100%;margin:0 auto}
+
+/* ---------- SPLASH ---------- */
+.splash{background:var(--bg)}
+.splash-art{
+  flex:1;background:url('img/splash.jpg') center/cover no-repeat;
+  position:relative;min-height:0;
+}
+.splash-art::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(10,16,14,.75) 78%,var(--bg) 100%);
+}
+.splash-body{padding:0 24px calc(34px + var(--safeB));text-align:center;margin-top:-60px;position:relative;z-index:2}
+.splash-body h1{font-size:2rem;letter-spacing:1px;margin:2px 0 6px}
+.splash-body h1 em{color:var(--acc);font-style:normal;font-weight:400}
+.splash-body .sub{color:var(--muted);font-size:.85rem;margin-bottom:22px}
+.autor{color:var(--dim);font-size:.72rem;margin-top:14px}
+.kicker{font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--acc)}
+
+/* ---------- TOPO ---------- */
+.top{
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+  padding:calc(12px + var(--safeT)) 16px 12px;
+  background:rgba(10,16,14,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.top h2{font-size:1.1rem;font-weight:600;margin:0}
+.top .kicker{margin-bottom:1px}
+.top>div{flex:1;min-width:0}
+.ico{width:42px;height:42px;border-radius:11px;background:var(--card2);
+  border:1px solid var(--line);display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.ico:active{background:var(--acc3);border-color:var(--acc)}
+
+/* ---------- CARDS ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px;margin-bottom:14px}
+.card h2{font-size:1.15rem;margin-bottom:12px}
+.card h3{font-size:.95rem;color:var(--acc);margin-bottom:10px}
+.info{font-size:.88rem;color:var(--muted);white-space:pre-line;line-height:1.6}
+.hint{font-size:.78rem;color:var(--dim);margin-top:8px}
+.hint.center{text-align:center;margin:10px 0}
+.err{color:var(--red);font-size:.8rem;min-height:1.1em;margin-top:5px}
+.tt{font-size:.83rem;color:var(--amber);margin-top:9px;min-height:1.2em}
+.lbl{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--muted);margin-bottom:7px}
+
+/* ---------- INPUTS ---------- */
+input[type=text],.sel{
+  width:100%;padding:13px;border-radius:11px;background:var(--bg2);
+  border:1px solid var(--line);color:var(--txt);font-size:.95rem;appearance:none;outline:none}
+input[type=text]:focus,.sel:focus{border-color:var(--acc)}
+.range{width:100%;margin-top:8px;accent-color:var(--acc)}
+
+/* ---------- BOTÕES ---------- */
+.btn{width:100%;padding:15px;border-radius:12px;background:var(--acc2);
+  color:#04140c;font-weight:700;margin-top:14px;font-size:1.05rem}
+.btn:active{transform:scale(.98);background:var(--acc)}
+.btn.big{padding:17px;font-size:1.05rem}
+.btn.ghost{background:var(--card2);border:1px solid var(--line);color:var(--txt);font-weight:600;font-size:1rem}
+.btn.ghost:active{border-color:var(--acc)}
+.btn.danger{color:#ff9d9d;border-color:#5a2020}
+
+/* ---------- OPÇÕES ---------- */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opts.wrap3{grid-template-columns:repeat(auto-fit,minmax(92px,1fr))}
+.opt{padding:12px 10px;border-radius:11px;background:var(--bg2);
+  border:1px solid var(--line);text-align:left;transition:.15s}
+.opt b{display:block;font-size:.98rem;font-weight:600}
+.opt small{display:block;font-size:.72rem;color:var(--muted);margin-top:2px;line-height:1.3}
+.opt.on{background:var(--acc3);border-color:var(--acc)}
+.opt.on b{color:var(--acc)}
+.opt:active{transform:scale(.97)}
+
+/* ---------- CHIPS ---------- */
+.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;
+  scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{padding:8px 15px;border-radius:20px;white-space:nowrap;font-size:.85rem;
+  background:var(--card);border:1px solid var(--line);color:var(--muted);flex-shrink:0}
+.chip.on{background:var(--acc2);border-color:var(--acc);color:#04140c;font-weight:600}
+
+/* ---------- CARROSSEL ---------- */
+.carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:4px 0 10px;scrollbar-width:none}
+.carousel::-webkit-scrollbar{display:none}
+.plane{flex:0 0 88%;max-width:420px;scroll-snap-align:center;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden;transition:.2s}
+.plane.sel{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc),0 6px 24px rgba(57,217,138,.14)}
+.plane .ph{width:100%;aspect-ratio:16/7;object-fit:contain;background:#000;display:block}
+.plane .bd{padding:13px}
+.plane .nm{font-size:1.02rem;font-weight:700;display:flex;align-items:center;gap:7px}
+.plane .fam{font-size:.76rem;color:var(--muted);margin-top:1px}
+.plane .grid{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;
+  font-size:.8rem;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.plane .k{color:var(--dim)}
+.plane .v{color:var(--txt)}
+.plane .wikihint{
+  margin-top:9px;padding-top:8px;border-top:1px solid var(--line);
+  font-size:.72rem;color:var(--dim);text-align:center;opacity:0;transition:.2s}
+.plane.sel .wikihint{opacity:1;color:var(--acc)}
+.plane.sel{cursor:pointer}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.bdg{font-size:.65rem;padding:3px 8px;border-radius:6px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.4px}
+.e-bnz{background:#4a2a10;color:var(--amber)}
+.e-turn{background:#0f3a2a;color:var(--acc)}
+.e-energy{background:#0f2f4a;color:var(--blue)}
+.e-misto{background:#3a2a4a;color:#c39dff}
+.e-solo{background:#3a2020;color:#ff9d9d}
+.b-std{background:#1e3a2e;color:#8fd9b0}
+.b-dlx{background:#3a3410;color:#ffe27a}
+.b-kt{background:#4a2a10;color:var(--amber)}
+
+/* ---------- LEITOR DE MÚSICA (cockpit) ---------- */
+.radiobar{
+  display:flex;flex-direction:column;gap:7px;flex-shrink:0;
+  margin:0 16px 10px;padding:9px 11px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:12px;
+}
+.radiobar.on{border-color:var(--acc2)}
+.rb-linha1{display:flex;align-items:center;gap:9px}
+.rb-linha2{display:flex;gap:6px;justify-content:space-between}
+.radiobar .rb-txt{flex:1;min-width:0}
+.radiobar .rb-txt b{display:block;font-size:.82rem;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.radiobar .rb-txt small{display:block;font-size:.7rem;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.radiobar.on .rb-txt b{color:var(--acc)}
+.rb-vol{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;
+  flex-shrink:0;min-width:34px;text-align:right}
+.rb-btn{flex:1;height:36px;border-radius:9px;font-size:15px;
+  background:var(--card2);border:1px solid var(--line);
+  display:grid;place-items:center}
+.rb-btn:active{background:var(--acc3);border-color:var(--acc)}
+.rb-btn.acc{background:var(--acc3);border-color:var(--acc2);color:var(--acc)}
+.rb-btn.on{background:var(--acc3);border-color:var(--acc);color:var(--acc)}
+
+/* ---------- CHAT ---------- */
+.chat{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:16px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.msg{max-width:86%;padding:11px 14px;border-radius:14px;font-size:.92rem;
+  line-height:1.5;white-space:pre-line;animation:pop .25s}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}}
+.msg.eng{background:var(--card);border:1px solid var(--line);
+  align-self:flex-start;border-bottom-left-radius:4px}
+.msg.pil{background:var(--acc3);border:1px solid var(--acc2);
+  align-self:flex-end;border-bottom-right-radius:4px}
+.msg .quem{font-size:.65rem;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--dim);margin-bottom:4px}
+.msg.aviso{background:#3a2410;border-color:#7a5420;color:#ffd591;align-self:stretch;max-width:100%}
+
+/* ---------- ACÇÕES RÁPIDAS ---------- */
+.acoes{display:flex;gap:7px;overflow-x:auto;padding:0 16px 10px;flex-shrink:0;
+  scrollbar-width:none}
+.acoes::-webkit-scrollbar{display:none}
+.acao{padding:8px 14px;border-radius:18px;white-space:nowrap;font-size:.82rem;
+  background:var(--card2);border:1px solid var(--line);color:var(--muted);flex-shrink:0}
+.acao:active{background:var(--acc3);border-color:var(--acc);color:var(--acc)}
+
+/* ---------- BARRA DO MICROFONE ---------- */
+.barra{display:flex;gap:10px;align-items:center;padding:0 16px 8px;flex-shrink:0}
+.mic-toggle{width:calc(52px * var(--btn-scale));height:calc(52px * var(--btn-scale));border-radius:14px;background:var(--card2);
+  border:1px solid var(--line);font-size:calc(21px * var(--btn-scale));display:grid;place-items:center;flex-shrink:0}
+.mic-toggle.on{background:var(--acc3);border-color:var(--acc);
+  box-shadow:0 0 14px rgba(57,217,138,.3)}
+.mic-big{flex:1;height:calc(60px * var(--btn-scale));border-radius:16px;background:var(--acc2);color:#04140c;
+  display:flex;align-items:center;justify-content:center;gap:9px;font-weight:700;
+  user-select:none;-webkit-user-select:none;touch-action:none}
+.mic-big .mic-ico{font-size:calc(23px * var(--btn-scale))}
+.mic-big .mic-txt{font-size:calc(.88rem * var(--btn-scale))}
+.mic-big.grav{background:var(--red);color:#fff;animation:pulsa 1.1s infinite}
+@keyframes pulsa{50%{box-shadow:0 0 0 14px rgba(255,85,85,0)}
+  0%{box-shadow:0 0 0 0 rgba(255,85,85,.55)}}
+.estado{text-align:center;font-size:.75rem;color:var(--dim);
+  padding-bottom:calc(10px + var(--safeB));flex-shrink:0}
+.teclado{display:flex;gap:8px;padding:0 16px 8px;flex-shrink:0}
+.teclado input{flex:1}
+.teclado button{width:52px;border-radius:11px;background:var(--acc2);color:#04140c;font-size:19px}
+
+/* ---------- MODAIS ---------- */
+.modal{position:fixed;inset:0;z-index:200;background:rgba(4,8,7,.86);
+  backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center}
+.modal.on{display:flex;animation:fade .2s}
+.modal-box{background:var(--card);border:1px solid var(--line);
+  border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:88vh;
+  overflow-y:auto;padding:18px 18px calc(24px + var(--safeB));animation:sobe .28s}
+@keyframes sobe{from{transform:translateY(100%)}}
+.modal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.modal-top h3{font-size:1.1rem}
+.row-sw{display:flex;align-items:center;justify-content:space-between;
+  padding:11px 0;font-size:.9rem}
+.sw{position:relative;width:48px;height:27px;flex-shrink:0}
+.sw input{opacity:0;width:0;height:0}
+.sw i{position:absolute;inset:0;background:var(--line);border-radius:14px;transition:.2s}
+.sw i::before{content:"";position:absolute;width:21px;height:21px;left:3px;top:3px;
+  background:var(--muted);border-radius:50%;transition:.2s}
+.sw input:checked+i{background:var(--acc2)}
+.sw input:checked+i::before{transform:translateX(21px);background:#04140c}
+
+/* ---------- SLIDERS DE VOZ ---------- */
+.sld{display:flex;justify-content:space-between;align-items:baseline;
+  margin:12px 0 2px;font-size:.82rem;color:var(--muted)}
+.sld b{color:var(--acc);font-size:.85rem}
+
+/* ---------- A TOCAR AGORA ---------- */
+.agora{display:flex;align-items:center;gap:10px;margin-top:10px;padding:11px;
+  background:var(--bg2);border:1px solid var(--acc2);border-radius:11px}
+.agora .ag-txt{flex:1;min-width:0}
+.agora .ag-lbl{display:block;font-size:.62rem;text-transform:uppercase;
+  letter-spacing:1.3px;color:var(--acc);margin-bottom:2px}
+.agora b{display:block;font-size:.88rem;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.agora small{display:block;font-size:.74rem;color:var(--muted)}
+.agora .ico{width:38px;height:38px;font-size:16px}
+
+/* ---------- REGISTO ---------- */
+.loglist{max-height:48vh;overflow-y:auto;margin:10px 0;
+  background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:11px}
+.logses{margin-bottom:16px}
+.logses:last-child{margin:0}
+.logses h4{font-size:.78rem;color:var(--acc);margin-bottom:7px;
+  padding-bottom:5px;border-bottom:1px solid var(--line)}
+.logln{font-size:.82rem;margin-bottom:5px;line-height:1.45}
+.logln .h{color:var(--dim);font-size:.72rem}
+.logln.p{color:var(--blue)}
+.logln.e{color:var(--txt)}
+.logvaz{color:var(--dim);text-align:center;padding:20px;font-size:.85rem}
+
+/* ---------- AVIÕES IDEAIS ---------- */
+.ideais{display:flex;flex-direction:column;gap:9px;margin:12px 0}
+.ideal{display:flex;align-items:center;gap:11px;padding:9px;border-radius:12px;
+  background:var(--bg2);border:1px solid var(--line);text-align:left;width:100%}
+.ideal:active{border-color:var(--acc);background:var(--acc3)}
+.ideal.atual{border-color:var(--acc);background:var(--acc3)}
+.ideal img{width:88px;height:44px;object-fit:contain;background:#000;
+  border-radius:7px;flex-shrink:0}
+.ideal .in{flex:1;min-width:0}
+.ideal .in b{display:block;font-size:.9rem}
+.ideal .in small{display:block;font-size:.73rem;color:var(--muted);margin-top:1px}
+.ideal .mk{font-size:1.1rem;flex-shrink:0}
+
+/* ---------- BOTÃO PARAR FALA (global) ---------- */
+.calar{
+  position:fixed;right:14px;bottom:calc(88px + var(--safeB));z-index:250;
+  padding:11px 17px;border-radius:24px;font-size:.85rem;font-weight:700;
+  background:#4a1818;border:1px solid #8a2b2b;color:#ffb3b3;
+  box-shadow:0 6px 20px rgba(0,0,0,.5);
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s;
+}
+.calar.on{opacity:1;pointer-events:auto;transform:none}
+.calar:active{background:#6b2020}
+
+/* ---------- TOAST ---------- */
+#toast{position:fixed;left:50%;bottom:calc(96px + var(--safeB));z-index:300;
+  transform:translateX(-50%);background:var(--card2);border:1px solid var(--acc);
+  color:var(--acc);padding:11px 19px;border-radius:24px;font-size:.85rem;font-weight:600;
+  opacity:0;pointer-events:none;transition:.25s;max-width:88vw;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(-6px)}
+#toast.warn{border-color:var(--amber);color:var(--amber)}
+
+/* ============================================================
+   TEMAS MODERNOS — cartões suaves, brilho, cantos redondos
+   ============================================================ */
+.t-moderno body{background-attachment:fixed}
+.t-moderno .card,
+.t-moderno .plane,
+.t-moderno .modal-box{
+  background:color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter:blur(12px);
+  border-radius:var(--r);
+  box-shadow:0 6px 22px rgba(0,0,0,.35);
+}
+.t-moderno .top{
+  background:color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+.t-moderno .opt,
+.t-moderno .ideal,
+.t-moderno .tr,
+.t-moderno .step,
+.t-moderno .radiobar,
+.t-moderno .agora,
+.t-moderno .loglist{
+  background:color-mix(in srgb, var(--card2) 55%, transparent);
+  border-radius:14px;
+}
+.t-moderno .opt.on{
+  background:color-mix(in srgb, var(--acc) 18%, transparent);
+  border-color:color-mix(in srgb, var(--acc) 55%, transparent);
+}
+.t-moderno .btn{
+  border-radius:14px;
+  box-shadow:0 4px 16px color-mix(in srgb, var(--acc2) 40%, transparent);
+}
+.t-moderno .ico,
+.t-moderno .rb-btn,
+.t-moderno .mic-toggle{
+  background:color-mix(in srgb, var(--card2) 70%, transparent);
+  border-radius:13px;
+}
+.t-moderno .chip.on,
+.t-moderno .bdg{border-radius:9px}
+.t-moderno .msg{border-radius:18px}
+.t-moderno .msg.eng{border-bottom-left-radius:6px}
+.t-moderno .msg.pil{border-bottom-right-radius:6px}
+.t-moderno .mic-big{
+  border-radius:18px;
+  box-shadow:0 6px 24px color-mix(in srgb, var(--acc2) 45%, transparent);
+}
+.t-moderno .sw i{border-radius:15px}
+
+/* lista de temas nas definições */
+.temalista{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.temaop{display:flex;align-items:center;gap:12px;padding:11px;width:100%;
+  text-align:left;border-radius:14px;background:var(--bg2);
+  border:1px solid var(--line);transition:.15s}
+.temaop.on{border-color:var(--acc);background:var(--acc3)}
+.temaop:active{transform:scale(.985)}
+.temaop .amostra{width:48px;height:48px;border-radius:14px;flex-shrink:0;
+  display:grid;place-items:center;font-size:24px;border:2px solid rgba(255,255,255,.12);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);font-weight:600;
+  transition:transform .2s,box-shadow .2s}
+.temaop .tn{flex:1;min-width:0}
+.temaop .tn b{display:block;font-size:.9rem}
+.temaop .tn small{display:block;font-size:.74rem;color:var(--muted)}
+.temaop .tick{color:var(--acc);font-size:1.1rem;opacity:0}
+.temaop.on .tick{opacity:1}
+.grupo-lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:1.4px;
+  color:var(--dim);margin:14px 0 6px}
+
+@media(min-width:640px){
+  .plane{flex-basis:64%}
+  .modal{align-items:center}
+  .modal-box{border-radius:20px}
+}
+
+/* ============================================================
+   ESQUEMAS DE BOTÕES (múltiplos) — NOVO
+   ============================================================ */
+
+/* ---------- lista de esquemas ---------- */
+.esq-item{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 0;border-bottom:1px solid rgba(38,64,58,.5);
+}
+.esq-item:last-of-type{border:none}
+.esq-nome{
+  flex:1;text-align:left;font-size:.95rem;font-weight:600;
+  padding:6px 0;color:var(--txt);
+}
+.esq-nome:active{color:var(--acc)}
+
+/* ---------- topo do editor (nome + ações) ---------- */
+.esq-titulo-input{
+  flex:1;background:none;border:none;font-size:1.1rem;font-weight:700;
+  color:var(--txt);padding:4px 0;outline:none;
+}
+.esq-titulo-input:focus{color:var(--acc)}
+.esq-acoes-topo{display:flex;gap:9px;margin-bottom:14px}
+.esq-acoes-topo .ico{
+  width:auto;min-width:64px;height:56px;flex-direction:column;gap:2px;
+  font-size:18px;padding:6px 10px;border-radius:14px;
+}
+.esq-acoes-topo .ico small{font-size:.62rem;font-weight:600;color:var(--muted);text-transform:none}
+.esq-acoes-topo .ico:active small{color:var(--acc)}
+
+/* ---------- lista de funções no editor ---------- */
+.esq-fn{
+  display:flex;align-items:center;gap:10px;padding:11px 0;
+  border-bottom:1px solid rgba(38,64,58,.5);
+}
+.esq-fn:last-of-type{border:none}
+.fn-nome{
+  flex:1;text-align:left;font-size:.9rem;color:var(--txt);
+}
+.fn-nome small{display:block;color:var(--dim);font-size:.72rem;margin-top:2px}
+.fn-botao{
+  display:flex;align-items:center;gap:4px;flex-shrink:0;
+  padding:9px 12px;border-radius:11px;background:var(--bg2);
+  border:1px solid var(--line);font-weight:700;color:var(--acc);
+  min-width:64px;justify-content:center;
+}
+.fn-botao i{font-style:normal;color:var(--dim);font-size:.8em}
+
+/* ---------- barra de seleção múltipla (esquemas e funções) ---------- */
+.esq-toolbar{
+  position:sticky;top:0;z-index:100;
+  display:flex;flex-direction:column;gap:10px;
+  padding:14px;margin:0 0 16px;border-radius:12px;
+  background:var(--bg);border:2px solid var(--acc);
+  font-size:1rem;font-weight:700;color:var(--acc);
+}
+.esq-toolbar > span:first-child{
+  text-align:center;font-size:1.1rem;color:var(--acc);
+}
+.esq-toolbar-acoes{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+  width:100%;
+}
+.esq-toolbar-acoes .btn{
+  width:auto;flex:1;min-width:70px;
+  margin:0;padding:10px 14px;font-size:.95rem;
+  border-radius:10px;
+}
+.esq-item.sel,.esq-fn.sel{background:var(--acc3);border-radius:10px}
+
+/* ============================================================
+   ESTILO DOS BOTÕES — Old school vs Moderno
+   ============================================================ */
+
+/* ---------- Old school: traço de cartaz de guerra, cantos direitos ---------- */
+body.estilo-antigo .btn,
+body.estilo-antigo .opt,
+body.estilo-antigo .ico,
+body.estilo-antigo .fn-botao,
+body.estilo-antigo .chip,
+body.estilo-antigo .acao{
+  border-radius:3px!important;
+  border-width:2px!important;
+  box-shadow:none!important;
+  background-image:none!important;
+  font-family:Georgia,'Times New Roman',serif;
+  letter-spacing:.4px;
+}
+
+/* ============================================================
+   [v2.0] ESTILOS PARA PATENTES, MISSÕES, MAPAS E ARMAMENTO
+   ============================================================ */
+
+/* [v2.0] Estilos para Patentes */
+.patentes-wrapper {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.2);
+}
+
+.patentes-wrapper label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.patentes-wrapper select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 4px;
+}
+
+.callsign-display {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(76,175,80,0.2);
+  border-left: 4px solid #4CAF50;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+/* [v2.0] Estilos para Missões */
+.missoes-wrapper {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.2);
+}
+
+.missoes-wrapper label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.missoes-wrapper select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 4px;
+}
+
+.missao-briefing {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(33,150,243,0.2);
+  border-left: 4px solid #2196F3;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.missao-briefing h4 {
+  margin: 0 0 0.5rem 0;
+  color: #2196F3;
+}
+
+.missao-briefing p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* [v2.0] Estilos para Mapas */
+.mapas-wrapper {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.2);
+}
+
+.mapas-wrapper label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.mapas-wrapper select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #666;
+  border-radius: 4px;
+}
+
+.mapa-info {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(255,152,0,0.2);
+  border-left: 4px solid #FF9800;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.mapa-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #FF9800;
+}
+
+.mapa-info p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* [v2.0] Estilos para Armamento */
+.armamento-recomendado {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(244,67,54,0.2);
+  border-left: 4px solid #F44336;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.armamento-recomendado h4 {
+  margin: 0 0 0.5rem 0;
+  color: #F44336;
+}
+
+.armamento-recomendado p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+body.estilo-antigo .btn{border:2px solid var(--acc2)}
+body.estilo-antigo .opt.on{border-color:var(--acc)}
+
+/* ---------- Moderno: Material You / gradiente, cantos bem arredondados ---------- */
+body.estilo-moderno .btn{
+  border-radius:24px!important;
+  background:linear-gradient(135deg,var(--acc2),var(--acc))!important;
+  box-shadow:0 3px 10px color-mix(in srgb, var(--acc2) 45%, transparent)!important;
+  border:none!important;
+}
+body.estilo-moderno .opt,
+body.estilo-moderno .fn-botao,
+body.estilo-moderno .ico,
+body.estilo-moderno .chip,
+body.estilo-moderno .acao{
+  border-radius:18px!important;
+  border:none!important;
+  background:color-mix(in srgb, var(--card2) 80%, transparent)!important;
+  box-shadow:0 1px 4px rgba(0,0,0,.25)!important;
+}
+body.estilo-moderno .opt.on{
+  background:linear-gradient(135deg, color-mix(in srgb, var(--acc) 30%, var(--card2)), color-mix(in srgb, var(--acc) 15%, var(--card2)))!important;
+  box-shadow:0 2px 8px color-mix(in srgb, var(--acc) 35%, transparent)!important;
+}
+body.estilo-moderno .chip.on{
+  background:linear-gradient(135deg,var(--acc2),var(--acc))!important;
+  box-shadow:0 2px 6px color-mix(in srgb, var(--acc2) 45%, transparent)!important;
+}
+body.estilo-moderno .sw i{border-radius:20px!important}
+body.estilo-moderno .modal-box{border-radius:28px 28px 0 0!important}

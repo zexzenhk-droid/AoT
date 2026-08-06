@@ -1,0 +1,93 @@
+═══════════════════════════════════════════════════════════════
+  ✅ CORREÇÃO CONCLUÍDA - SELETORES NO LUGAR CERTO
+═══════════════════════════════════════════════════════════════
+
+Data: 05/08/2026
+Commit: 60d8231
+Branch: arena/019fbf31-aot-engenheiro
+
+---
+
+🔴 PROBLEMA ORIGINAL:
+  Os seletores de Patentes, Missões e Mapas apareciam em 
+  "Definições" ⚙️ em vez de "Configurar Missão" 🗺️
+
+---
+
+✅ SOLUÇÃO IMPLEMENTADA:
+
+1. index.html (linhas 121-124)
+   - MOVIDO containers de #modalDefs para #scMissao
+   - Posição: Após "Armamento", antes de "Briefing"
+
+2. js/app.js (linhas 412-415)
+   - MOVIDO chamadas de abrirDefs() para actMissao()
+   - Renderiza quando missão é configurada
+
+---
+
+📊 RESULTADO:
+
+AGORA os seletores aparecem em "Configurar Missão":
+
+  🟢 Nação Militar: USA (USAAF) / UK (RAF) / Germany (Luftwaffe)
+     └─ Patente: Second Lieutenant, Flight Officer, etc.
+     └─ Call Sign: Gerado automaticamente
+
+  🔵 Tipo de Missão: Single Mission / War Tales / Custom Battle
+     └─ Lista de missões específicas
+     └─ Briefing detalhado com dificuldade e data
+
+  🟠 Mapa: 14 mapas históricos
+     └─ Condição Meteorológica: 13 opções
+     └─ Informações completas (região, data, tamanho)
+
+  🔴 Recomendação de Armamento
+     └─ Baseado na missão selecionada
+     └─ Armamento primário + secundário
+     └─ Táticas sugeridas
+
+---
+
+🎯 FLUXO CORRETO:
+
+1. Hangar → Selecionar aeronave
+2. "Confirmar aeronave" ✅
+3. **"Configurar Missão"** abre com TODOS os seletores
+4. Configurar: Patente → Missão → Mapa → Clima
+5. Ver recomendação de armamento
+6. Ler briefing
+7. "Para o cockpit →"
+
+---
+
+✅ VERIFICAÇÃO:
+
+• Sintaxe JavaScript: OK ✅
+• Containers no lugar certo: Linha 121 em #scMissao ✅
+• Funções chamadas corretamente: Em actMissao() ✅
+• Commit no GitHub: 60d8231 ✅
+• Push bem-sucedido: arena/019fbf31-aot-engenheiro ✅
+
+---
+
+📁 FICHEIROS ALTERADOS:
+
+• index.html (movido containers)
+• js/app.js (movido chamadas de funções)
+• CORRECAO_SELETORES_v2.0.md (documentação)
+
+---
+
+🚀 PRÓXIMOS PASSOS:
+
+1. Testar no navegador com hard refresh (Ctrl+Shift+R)
+2. Verificar se todos os seletores aparecem
+3. Testar interatividade (trocar nação, missão, mapa)
+4. Confirmar persistência (localStorage)
+
+---
+
+✅ STATUS: CORREÇÃO 100% COMPLETA E NO GITHUB!
+
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>⚠️ Unidades dos mostradores — AOT Engenheiro</title>
+<style>
+:root{
+  --bg:#0a100e; --card:#152220; --card2:#1b2b28; --line:#26403a;
+  --txt:#dfeae6; --muted:#7f9a92; --acc:#39d98a; --amber:#ffb020; --red:#ff5555;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  line-height:1.55;padding:16px;max-width:760px;margin:0 auto}
+h1{font-size:1.3rem;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+.sub{color:var(--muted);font-size:.85rem;margin:0 0 20px}
+
+.alerta{
+  background:linear-gradient(135deg,#3a2410,#4a2f14);
+  border:1px solid #7a5420;border-left:4px solid var(--amber);
+  border-radius:12px;padding:16px;margin-bottom:18px;
+}
+.alerta h2{color:var(--amber);font-size:1rem;margin:0 0 8px}
+.alerta p{margin:0 0 8px;font-size:.92rem}
+.alerta p:last-child{margin:0}
+
+.card{background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:16px;margin-bottom:14px}
+.card h2{color:var(--acc);font-size:1rem;margin:0 0 10px}
+.card h3{color:var(--txt);font-size:.92rem;margin:16px 0 6px}
+
+table{width:100%;border-collapse:collapse;font-size:.87rem;margin-top:8px}
+th{text-align:left;color:var(--muted);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:1px;padding:6px 8px;border-bottom:1px solid var(--line)}
+td{padding:10px 8px;border-bottom:1px solid rgba(38,64,58,.55);vertical-align:top}
+tr:last-child td{border:none}
+tr.alerta-row{background:rgba(255,176,32,.07)}
+.grp{font-weight:600;white-space:nowrap}
+.avs{color:var(--muted);font-size:.82rem}
+.un{text-align:right;font-weight:700;white-space:nowrap}
+.u-mph{color:#7dd3fc}.u-kmh{color:var(--acc)}.u-kt{color:var(--amber)}
+
+.destaque{background:var(--card2);border-left:3px solid var(--red);
+  border-radius:8px;padding:13px;margin:12px 0}
+.destaque strong{color:var(--red)}
+
+.exemplo{background:#0d1614;border:1px solid var(--line);border-radius:9px;
+  padding:13px;margin:10px 0;font-size:.9rem}
+.exemplo .lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--muted);margin-bottom:5px}
+.fala{color:var(--acc);font-style:italic}
+.mau{color:#ff8888;text-decoration:line-through;opacity:.75}
+
+.conv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-top:10px}
+.conv div{background:var(--card2);border:1px solid var(--line);border-radius:9px;
+  padding:11px;text-align:center;font-size:.85rem}
+.conv b{display:block;color:var(--acc);font-size:1.15rem;margin-bottom:2px}
+ul{margin:8px 0;padding-left:20px}li{margin-bottom:7px;font-size:.9rem}
+.foot{color:var(--muted);font-size:.78rem;text-align:center;margin-top:22px;
+  padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<h1>⚠️ Unidades dos mostradores</h1>
+<p class="sub">Aces of Thunder · PSVR2 — leitura obrigatória antes de voar</p>
+
+<div class="alerta">
+  <h2>Os mostradores não mudam nas definições</h2>
+  <p>Podes trocar as unidades do <strong>HUD</strong> nas opções do jogo, mas os
+  <strong>instrumentos da cabina não mudam</strong>: são modelados conforme a
+  nacionalidade real do avião, tal como aconteceria na vida real.</p>
+  <p>Como no Aces of Thunder se voa <strong>sempre</strong> da cabina, estás quase
+  sempre a olhar para o mostrador verdadeiro. Por isso o engenheiro fala
+  sempre na unidade <em>desse</em> avião.</p>
+</div>
+
+<div class="card">
+  <h2>As três unidades em jogo</h2>
+  <table>
+    <tr><th>Nação / serviço</th><th>Aviões</th><th style="text-align:right">Mostrador</th></tr>
+
+    <tr><td class="grp">🇺🇸 Estados Unidos</td>
+        <td class="avs">P-51C, P-47D, P-63A, P-40E, F4U-4, SBD-3, SB2C-4</td>
+        <td class="un u-mph">mph</td></tr>
+
+    <tr><td class="grp">🇬🇧 Reino Unido<br><span class="avs" style="font-weight:400">RAF + Fleet Air Arm</span></td>
+        <td class="avs">Spitfire Ia e Vb, Typhoon, Mosquito, Hurricane, Firefly</td>
+        <td class="un u-mph">mph</td></tr>
+
+    <tr><td class="grp">🇩🇪 Alemanha</td>
+        <td class="avs">Bf 109 F-4, Bf 109 G-2, Fw 190 A-4, Bf 110 G-2</td>
+        <td class="un u-kmh">km/h</td></tr>
+
+    <tr><td class="grp">🇷🇺 URSS</td>
+        <td class="avs">Yak-9T, Yak-3, La-5FN, IL-2M</td>
+        <td class="un u-kmh">km/h</td></tr>
+
+    <tr class="alerta-row"><td class="grp">🇯🇵 Japão — <strong>MARINHA</strong></td>
+        <td class="avs">A6M3 Zero, J2M2 Raiden, D4Y3 Suisei</td>
+        <td class="un u-kt">nós</td></tr>
+
+    <tr class="alerta-row"><td class="grp">🇯🇵 Japão — <strong>EXÉRCITO</strong></td>
+        <td class="avs">Ki-61-I tei</td>
+        <td class="un u-kmh">km/h</td></tr>
+
+    <tr><td class="grp">🛩️ WWI — Alemanha / França</td>
+        <td class="avs">Fokker Dr.I, Fokker D.VII, SPAD S.XIII</td>
+        <td class="un u-kmh">km/h</td></tr>
+
+    <tr><td class="grp">🛩️ WWI — Reino Unido</td>
+        <td class="avs">Sopwith F.1 Camel</td>
+        <td class="un u-mph">mph</td></tr>
+  </table>
+
+  <div class="destaque">
+    <strong>A armadilha japonesa.</strong> A Marinha Imperial usava <b>nós</b>,
+    o Exército Imperial usava <b>km/h</b> — e o jogo tem os dois.
+    Se leres 300 no Zero a pensar que são km/h, estás na verdade a 556 km/h.
+    Quase o dobro. O Ki-61 é o único japonês em km/h.
+  </div>
+</div>
+
+<div class="card">
+  <h2>Como o engenheiro fala</h2>
+  <p style="font-size:.9rem;color:var(--muted);margin:0">
+    Regra: <strong>número do mostrador primeiro</strong>, referência em km/h depois.
+    Estás a olhar para o ponteiro — precisas já do número que lá está.
+  </p>
+
+  <div class="exemplo">
+    <div class="lbl">P-51 Mustang · mostrador em mph</div>
+    <p class="mau" style="margin:0 0 5px">"Trem em cima antes dos 304."</p>
+    <p class="fala" style="margin:0">"Trem em cima. Tens até cento e noventa.
+    Cento e noventa <b>milhas</b>, uns trezentos e quatro quilómetros."</p>
+  </div>
+
+  <div class="exemplo">
+    <div class="lbl">A6M3 Zero · mostrador em nós</div>
+    <p class="fala" style="margin:0">"Não passes dos cento e sessenta <b>nós</b>."</p>
+  </div>
+
+  <div class="exemplo">
+    <div class="lbl">Bf 109 · mostrador em km/h</div>
+    <p class="fala" style="margin:0">"Trem em cima. Tens até trezentos e quatro."
+    <span style="color:var(--muted);font-style:normal"> — sem conversão, já é a unidade certa</span></p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Conversão rápida</h2>
+  <div class="conv">
+    <div><b>× 1,61</b>mph → km/h</div>
+    <div><b>÷ 1,61</b>km/h → mph</div>
+    <div><b>× 1,85</b>nós → km/h</div>
+    <div><b>÷ 1,85</b>km/h → nós</div>
+  </div>
+  <p style="font-size:.85rem;color:var(--muted);margin-top:11px">
+    Atalho mental: <strong>mph ≈ km/h a dividir por 1,6</strong> (300 km/h ≈ 190 mph).
+    Para nós, <strong>quase metade</strong> do valor em km/h (300 km/h ≈ 162 nós).
+  </p>
+</div>
+
+<div class="card">
+  <h2>IAS vs TAS — porque o ponteiro "mente"</h2>
+  <p style="font-size:.9rem">O mostrador indica <strong>IAS</strong> (velocidade
+  indicada), calculada pela pressão do ar. As fichas técnicas publicam a
+  velocidade máxima em <strong>TAS</strong> (velocidade verdadeira).</p>
+  <p style="font-size:.9rem">Quanto mais alto voas, mais rarefeito é o ar e maior
+  a diferença. A 6000 m, um avião a 600 km/h reais mostra uns
+  <strong>430 km/h</strong> no ponteiro.</p>
+  <div class="destaque" style="border-left-color:var(--acc)">
+    Por isso o engenheiro <strong>nunca</strong> te dá a velocidade máxima como alvo.
+    Dá-te os <strong>limites de trem e de flaps</strong>, que são definidos em IAS
+    e batem certo com o que estás a ver.
+  </div>
+</div>
+
+<div class="card">
+  <h2>✅ Os 29 aviões estão confirmados</h2>
+  <p style="font-size:.9rem;margin:0 0 10px">Dois casos levantaram dúvida e ficaram
+  esclarecidos com fontes:</p>
+  <ul>
+    <li><strong>SPAD S.XIII → km/h.</strong> Francês, anemómetro métrico.
+    O <em>site oficial do Aces of Thunder</em> publica a velocidade de cruzeiro
+    como <strong>190 km/h</strong> — a própria Gaijin usa o sistema métrico
+    para este avião.</li>
+    <li><strong>Firefly FR Mk V → mph.</strong> A Fleet Air Arm só passou para
+    nós no <em>pós-guerra</em>. Na época do Mk V, os instrumentos navais
+    britânicos eram em mph, tal como os da RAF.</li>
+  </ul>
+  <p style="font-size:.85rem;color:var(--muted);margin:10px 0 0">
+    Não há casos por confirmar. Se ainda assim encontrares um mostrador
+    diferente em voo, é uma linha a corrigir em <code>js/unidades.js</code>.
+  </p>
+</div>
+
+<p class="foot">AOT Engenheiro · por José Duarte<br>
+Se confirmares algum mostrador em voo, corrige em <code>js/unidades.js</code></p>
+
+</body>
+</html>
