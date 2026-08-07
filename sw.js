@@ -1,4 +1,16 @@
-/* AOT Engenheiro — service worker (offline)
+/* 
+
+// REGRA DE SEGURANÇA PARA STREAMING DO INTERNET ARCHIVE (ERRO 206)
+self.addEventListener('fetch', event => {
+  if (event.request.url.includes('archive.org') || event.request.url.endsWith('.mp3')) {
+    return event.respondWith(fetch(event.request));
+  }
+});
+
+AOT Engenheiro — service worker (offline)
+
+/* 
+AOT Engenheiro — service worker (offline)
    ------------------------------------------------------------
    Estratégia:
    • CORE (app shell)  → cache-first (rápido, offline)
